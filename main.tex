@@ -1,0 +1,128 @@
+%%
+%% Author: Nikolas Klug
+%%
+
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\renewcommand{\baselinestretch}{1.15} % line distance 
+
+\newtheorem{theorem}{Theorem}
+
+% k-RNN: Extending NN-heuristics for the TSP
+\title{$k$-RNN for the TSP...}
+
+\author{Nikolas Klug, Alok Chauhan}
+
+
+\begin{document}
+	\maketitle
+	\begin{abstract}
+		This is the abstract of the paper.
+	\end{abstract}
+
+	\section{Introduction}
+	\label{sec:introduction}
+	
+		Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
+	In fact, we extend those algorithms to a more general basis.
+	
+	\section{Algorithm}
+	\label{sec:algorithm}
+	In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN).
+
+	Similarity: $k$-Opt -- $k$-RNN
+	Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a "tour". 	
+	
+	Let $G = (V, E)$ be a complete Graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be vertices of $G$. 
+	Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two nodes. 
+	The algorithm consists of the following steps.
+	
+	Step 1: For every combination of $k$ distinct vertices $v_1, v_2, \mathellipsis, v_k$ create the tour fragment $T = (v_1, v_2, \mathellipsis, v_k)$ and mark the nodes $v_1, v_2, \mathellipsis, v_k$ as visited.
+	
+	Step 2.1: Set $q_e = q_k$.
+	
+	Step 2.2: While there are unvisited nodes left: 
+	Select $v_{i+1}$ as the nearest unvisited neighbor of $q_e$. If there are multiple nearest neighbors, select one randomly.
+	Mark $v_{i+1}$ as visited and set $q_e = v_{i+1}$
+	
+	Step 3: Among all $k!$ tours found select the shortest as the result.
+	
+	
+	
+	Note that for $k = 1$ the algorithm equals the well-known Repetitive-Nearest-Neighbor approach, and one might define the case $k = 0$ as the popular Nearest-Neighbor algorithm, where one starting node gets selected randomly.
+	
+	The running time of the algorithm consists of two major parts. 
+	The first is the outer for-loop in step 1. 
+	Since for every $k \in \mathbb{N}$ there are $\frac{n!}{(n-k)!}$ (ordered) combinations of nodes and since $\frac{n!}{(n-k)!} \in O(n^k)$, the for-loop in step 1 does a total of $O(n^k)$ iterations.
+	The second important part for the running time is step 2. In order to find the nearest unvisited neighbor, the algorithm considers a maximum of $n$ edges emerging from the current node. 
+	Since this is done for $n - k = O(n)$ nodes, the total running time of step 2 is $O(n^2)$.
+	
+	Therefore a $k$-RNN run takes $O(n^2 \cdot n^k) = O(n^{k+2})$ time.
+	
+	Similar to $k$-Opt, for $k = n$ the algorithm gives the exact solution. 
+	Due to a running time of $O(n^n)$ this is not the preferable way to obtain it.
+	
+	In the following we refer to an execution of $k$-RNN for a specific instance and fixed $k$ as a "run" of the algorithm.
+	We no present a property of the algorithm about the quality of the solution found by $k$-RNN.
+	\begin{theorem}
+		For $k < l$, if there exist no nodes $a, b, c$ with $c(a, b) = c(a, c)$, the result of a $l$-RNN run is always better or equal to the result of a $k$-RNN run.
+	\end{theorem}
+	\begin{proof}
+		Let $T$ be a tour found by a $k$-RNN run and $(v_1, v_2, \mathellipsis, v_l)$ the first $l$ nodes of $T$. 
+		A $l$-RNN run considers every permutation of $l$ nodes as a starting tour, so especially the permutation $(p_1, p_2, \mathellipsis, p_l)$ where $p_i = v_i$ for $1 \leq i \leq l$. 
+		From there on, both runs construct the same tour.
+	\end{proof}
+	
+	There are also some variations of the presented algorithm of which we want to mention two.
+	
+	In step 2.2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_i$. This can be extended in such a way, that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
+	We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm would then look the following:
+	
+	Step 2.1 Set $q_e = v_k$ and $q_s = v_1$ .
+	
+	Step 2.2: While there are unvisited nodes left: 
+	Select $q$ as $\arg \min\{c(q_e, p),\ c(q_s, p) |\ p \in V \text{ and $p$ is unvisited}\}$ and mark $q$ as visited. If $c(q_s, q) < c (q_e, u)$, insert $q$ at the start of $T$ and set $q_s = q$. Else append $q$ to the end of $T$ and set $q_e = q$.
+	
+	Another variant is that when you find multiple edges with the same weight in Step 2.2, you continue constructing multiple paths, one for each duplicate. 
+	Although this eliminates the potential randomness, this will make the running time grow exponentially.
+	 
+	% Maybe example of 2-RNN?
+	% Variations: bi-directional, duplicates
+	\section{Related Work}
+	\label{sec:related}
+	
+	As Gutin, Yeo and Zverovich have shown \cite{GUTIN2002}, the Nearest-Neighbor approach in general is sub optimal: 
+	For each number of nodes there exist some instances for which the algorithm produces a very poor result. 
+	Despite this all samples tested in our experiments in Section \ref{sec:experimental} produce reasonable results.
+	
+	What else?
+	\section{Experimental Results}
+	\label{sec:experimental}
+	
+	In the following we are going to present some experimental results of the algorithm. The experiments where conducted for several instances of TSPLIB \cite{REINELT1995}, symmetric as well as asymmetric.
+	
+	TABLES
+	
+	\input{symmetric_table}
+	
+	\input{asymmetric_table}
+	
+	Results show that the quality is most of the time only increasing by a tiny portion.
+
+	
+	\section{Conclusion}
+	\label{sec:conclusion}
+	
+	Future research: Domination Analysis of the more general $k$-RNN.
+	
+	\bibliography{main}
+	\bibliographystyle{plain}
+	
+\end{document}
