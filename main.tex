@@ -9,9 +9,18 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{siunitx}
 
 
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \renewcommand{\baselinestretch}{1.15} % line distance 
+\allowdisplaybreaks
 
 \newtheorem{theorem}{Theorem}
 
@@ -29,45 +38,46 @@
 
 	\section{Introduction}
 	\label{sec:introduction}
+	The traveling salesman problem is one of the most studied problems in Theoretical Computer Science. 
+	Although its simplicity, no efficient algorithms exist. 
+	Thus a lot of heuristics and approximation algorithms have emerged, some are more simple like GR and NN, some are more complicated like the Lin-Kernigham heuristic \cite{LIN1973}.
 	
-		Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
+	Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
 	In fact, we extend those algorithms to a more general basis.
 	
 	\section{Algorithm}
 	\label{sec:algorithm}
-	In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN).
-
-	Similarity: $k$-Opt -- $k$-RNN
+	In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
+	Later we will show a property about the quality of the solution found by the algorithm and present some of its variations.
 	Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a "tour". 	
 	
 	Let $G = (V, E)$ be a complete Graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be vertices of $G$. 
-	Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two nodes. 
+	Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two vertices. 
 	The algorithm consists of the following steps.
 	
-	Step 1: For every combination of $k$ distinct vertices $v_1, v_2, \mathellipsis, v_k$ create the tour fragment $T = (v_1, v_2, \mathellipsis, v_k)$ and mark the nodes $v_1, v_2, \mathellipsis, v_k$ as visited.
 	
-	Step 2.1: Set $q_e = q_k$.
-	
-	Step 2.2: While there are unvisited nodes left: 
-	Select $v_{i+1}$ as the nearest unvisited neighbor of $q_e$. If there are multiple nearest neighbors, select one randomly.
-	Mark $v_{i+1}$ as visited and set $q_e = v_{i+1}$
-	
-	Step 3: Among all $k!$ tours found select the shortest as the result.
-	
-	
+	\begin{description}
+		\item[Step 1:] For every combination of $k$ distinct vertices $v_1, v_2, \mathellipsis, v_k$ create the partial tour $T = (v_1, v_2, \mathellipsis, v_k)$ and mark the vertices $v_1, v_2, \mathellipsis, v_k$ as visited.
+		
+		\item[Step 2:] Set $q_e = q_k$. While there are unvisited vertices left: 
+		Select $v_{i+1}$ as the nearest unvisited neighbor of $q_e$. 
+		If there are multiple nearest neighbors, select one any.
+		Mark $v_{i+1}$ as visited and set $q_e = v_{i+1}$.
+		
+		\item[Step 3:] Among all $k!$ tours found select the shortest as the result
+	\end{description}	
 	
 	Note that for $k = 1$ the algorithm equals the well-known Repetitive-Nearest-Neighbor approach, and one might define the case $k = 0$ as the popular Nearest-Neighbor algorithm, where one starting node gets selected randomly.
 	
 	The running time of the algorithm consists of two major parts. 
-	The first is the outer for-loop in step 1. 
-	Since for every $k \in \mathbb{N}$ there are $\frac{n!}{(n-k)!}$ (ordered) combinations of nodes and since $\frac{n!}{(n-k)!} \in O(n^k)$, the for-loop in step 1 does a total of $O(n^k)$ iterations.
-	The second important part for the running time is step 2. In order to find the nearest unvisited neighbor, the algorithm considers a maximum of $n$ edges emerging from the current node. 
-	Since this is done for $n - k = O(n)$ nodes, the total running time of step 2 is $O(n^2)$.
+	The first is the outer for-loop in Step 1. 
+	Since for every $k \in \mathbb{N}$ there exist $\frac{n!}{(n-k)!}$ (ordered) combinations of nodes and since $\frac{n!}{(n-k)!} \in O(n^k)$, the for-loop in Step 1 does a total of $O(n^k)$ iterations.
+	The second important part for the running time is Step 2. In order to find the nearest unvisited neighbor, the algorithm considers a maximum of $n$ edges emerging from the current node. 
+	Since this is done for $n - k = O(n)$ nodes, the total running time of Step 2 is $O(n^2)$.
+	Therefore a $k$-RNN run takes time $O(n^2 \cdot n^k) = O(n^{k+2})$.
 	
-	Therefore a $k$-RNN run takes $O(n^2 \cdot n^k) = O(n^{k+2})$ time.
-	
-	Similar to $k$-Opt, for $k = n$ the algorithm gives the exact solution. 
-	Due to a running time of $O(n^n)$ this is not the preferable way to obtain it.
+	Similar to the $k$-Opt algorithms \cite{CROES1958, LIN1973}, for $k = n$ $k$-RNN also gives the exact solution. In this case, the algorithm degrades to a brute-force search.
+	Due to the running time of $O(n!)$ this is not the preferable way to obtain it.
 	
 	In the following we refer to an execution of $k$-RNN for a specific instance and fixed $k$ as a "run" of the algorithm.
 	We no present a property of the algorithm about the quality of the solution found by $k$-RNN.
@@ -85,12 +95,19 @@
 	In step 2.2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_i$. This can be extended in such a way, that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
 	We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm would then look the following:
 	
-	Step 2.1 Set $q_e = v_k$ and $q_s = v_1$ .
+	\begin{description}
+		\item[Step 2:] Set $q_e = v_k$ and $q_s = v_1$. 
+		While there are unvisited vertices left: 
+		Select $q$ as 
+		\[
+		\arg \min\{c(q_e, p),\ c(q_s, p) |\ p \in V \text{ and $p$ is unvisited}\}
+		\] 
+		and mark $q$ as visited. If $c(q_s, q) < c (q_e, u)$, insert $q$ at the start of $T$ and set $q_s = q$. Else append $q$ to the end of $T$ and set $q_e = q$.
+	\end{description}
+
+	Results...
 	
-	Step 2.2: While there are unvisited nodes left: 
-	Select $q$ as $\arg \min\{c(q_e, p),\ c(q_s, p) |\ p \in V \text{ and $p$ is unvisited}\}$ and mark $q$ as visited. If $c(q_s, q) < c (q_e, u)$, insert $q$ at the start of $T$ and set $q_s = q$. Else append $q$ to the end of $T$ and set $q_e = q$.
-	
-	Another variant is that when you find multiple edges with the same weight in Step 2.2, you continue constructing multiple paths, one for each duplicate. 
+	Another variant is that when you find multiple edges with the same weight in Step 2, you continue constructing multiple paths, one for each duplicate. 
 	Although this eliminates the potential randomness, this will make the running time grow exponentially.
 	 
 	% Maybe example of 2-RNN?

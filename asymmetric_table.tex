@@ -2,9 +2,13 @@
 	\centering
 	\begin{minipage}{\linewidth}
 		\centering
-		\begin{tabular*}{\textwidth}{l||r|| l | l || l | l }
-			Dataset & Optimum & 1-RNN & Excess (in \%) & 2-RNN & Excess (in \%) \\
-			\hline\hline
+		\begin{tabular*}{\linewidth}{*{6}{l}}
+			\toprule
+			&& \multicolumn{2}{c}{1-RNN}& \multicolumn{2}{c}{2-RNN} \\
+			\cmidrule(lr){3-4}
+			\cmidrule(lr){5-6}
+			Dataset & Optimum & Result & Excess & Result & Excess \\
+			\midrule
 			br17    & 39    & 56    & 43.59 & 39    & 0.00  \\
 			ft53    & 6905  & 8584  & 24.32 & 8323  & 20.54 \\
 			ft70    & 38673 & 41815 & 8.12  & 41633 & 7.65  \\
@@ -17,15 +21,16 @@
 			ftv64   & 1839  & 2202  & 19.74 & 2202  & 19.74 \\
 			ftv70   & 1950  & 2287  & 17.28 & 2218  & 13.74 \\
 			ftv170  & 2755  & 3582  & 30.02 & 3559  & 29.18 \\
-			kro124p & 26230 & 43316 & 65.14 & 43102 & 64.32 \\
+			kro124p & 36230 & 43316 & 19.56 & 43102 & 18.97 \\
 			p43     & 5620  & 5684  & 1.14  & 5653  & 0.59  \\
 			rbg323  & 1326  & 1702  & 28.36 & 1684  & 27.00 \\
 			rbg358  & 1163  & 1747  & 50.21 & 1719  & 47.81 \\
 			rbg403  & 2465  & 3497  & 41.87 & 3460  & 40.37 \\
 			ry48p   & 14422 & 15575 & 7.99  & 15575 & 7.99  \\
+			\bottomrule
 		\end{tabular*}
 	\end{minipage}
 	
-	\caption{Results for XX asymmetric instances of the TSP taken from \cite{REINELT1995}}
-	\label{fig:table}
+	\caption{Results for XX asymmetric instances of the TSP taken from TSPLIB \cite{REINELT1995}}
+	\label{fig:ATSP}
 \end{figure}

@@ -2,9 +2,13 @@
 	\centering
 	\begin{minipage}{\linewidth}
 		\centering
-		\begin{tabular*}{\textwidth}{l||r|| l | l || l | l }
-			Dataset & Optimum & 1-RNN & Excess (in \%) & 2-RNN & Excess (in \%) \\
-			\hline\hline
+		\begin{tabular*}{\linewidth}{*{6}{l}}
+			\toprule
+			&& \multicolumn{2}{c}{1-RNN}& \multicolumn{2}{c}{2-RNN} \\
+			\cmidrule(lr){3-4}
+			\cmidrule(lr){5-6}
+			Dataset & Optimum & Result & Excess & Result & Excess \\
+			\midrule
 			bier127  & 118282 & 133953 & 13.25 & 128589 & 8.71  \\
 			kroA150  & 26524  & 31479  & 18.68 & 31320  & 18.08 \\
 			berlin52 & 7542   & 8181   & 8.47  & 7968   & 5.65  \\
@@ -37,10 +41,11 @@
 			fl1400   & 20127  & 25115  & 24.78 & 24719  & 22.82 \\
 			nrw1379  & 56638  & 68531  & 21.00 & 67873  & 19.84 \\
 			p654     & 34643  & 43027  & 24.20 & 42935  & 23.94 \\
-			pcb1173  & 56892  & 70115  & 23.24 & 69085  & 21.43
+			pcb1173  & 56892  & 70115  & 23.24 & 69085  & 21.43 \\
+			\bottomrule
 		\end{tabular*}
 	\end{minipage}
 	
 	\caption{Results for XX euclidean instances of the TSP taken from \cite{REINELT1995}}
-	\label{fig:table}
+	\label{fig:STSP}
 \end{figure}
