@@ -43,22 +43,19 @@
 	The problem is, in fact, NP-hard and asks to find a shortest Hamiltonian Cycle in a given graph.
 	We refer to the TSP in undirected complete graphs as Symmetric TSP (STSP) and in directed complete graphs as Asymmetric TSP (ATSP).
 
-	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged.
-	
-	The NN approach has been mentioned one of the first times by Bellmore and Nemhauser in 1968 \cite{BELLMORE1968}.
-	
-	Some
-	 
-	 some are more simple like \red{GR} and \red{NN}, some are more complicated like the Lin-Kernigham heuristic \cite{LIN1973}.
-	
-	The algorithm we present is applicable to both types and the experimental results shown in section \ref{sec:experimental} do not show a big difference in quality of solution between the two types.
-	
-	First we present the algorithm and show some of its properties, then we show some related work and finally present some experimental results.
-	
+	\red{Definition: Tour}
 
-
-%	Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
-%	In fact, we extend those algorithms to a more general basis.
+	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged. One of the popular ones are the $2$-Opt heuristic \cite{CROES1958}, the $3$-Opt algorithm \cite{LIN1965} and the $k$-opt extension by Lin and Kernigham \cite{LIN1973} which uses a dynamic value.
+	
+	The idea behind the algorithm which is presented here is based on is the "Nearest Neighbor" heuristic (NN).
+	It has already been mentioned in the 1960s (\red{TODO: Check if this is true}) by Bellmore and Nemhauser \cite{BELLMORE1968}.
+	The basic idea of this algorithm is to pick one starting node randomly and repeatedly extend the sub-tour by its current nearest neighbor until a tour is formed.
+	
+	The algorithm we present provides some abstraction and generalization to this Nearest Neighbor heuristic. 
+	It is applicable to both STSP and ATSP and the experimental results in Section \ref{sec:experimental} do not show a big difference in quality of solution between those two.
+	
+	In Section \ref{sec:algorithm} we present the algorithm and show some of its properties, then we show some related work. 
+	In Section \ref{sec:experimental} we show some experimental results obtained from running some samples form TSPLIB \cite{REINELT1995}.
 	
 	\section{Algorithm}
 	\label{sec:algorithm}
