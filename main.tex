@@ -10,22 +10,22 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{array}
-\usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{siunitx}
+\usepackage{xcolor}
 
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \renewcommand{\baselinestretch}{1.15} % line distance 
+\newcommand{\red}{\textcolor{red}}
 \allowdisplaybreaks
 
 \newtheorem{theorem}{Theorem}
 
-% k-RNN: Extending NN-heuristics for the TSP
-\title{$k$-RNN for the TSP...}
+\title{$k$-RNN: Extending NN-heuristics for the TSP}
 
 \author{Nikolas Klug, Alok Chauhan}
 
@@ -33,17 +33,32 @@
 \begin{document}
 	\maketitle
 	\begin{abstract}
-		This is the abstract of the paper.
+		\red{This is the abstract of the paper.}
 	\end{abstract}
 
 	\section{Introduction}
 	\label{sec:introduction}
-	The traveling salesman problem is one of the most studied problems in Theoretical Computer Science. 
+	The traveling salesman problem (TSP) is one of the most studied problems in theoretical computer science. 
 	Despite its simplicity, no efficient algorithms exist. 
-	Thus a lot of heuristics and approximation algorithms have emerged, some are more simple like GR and NN, some are more complicated like the Lin-Kernigham heuristic \cite{LIN1973}.
+	The problem is, in fact, NP-hard and asks to find a shortest Hamiltonian Cycle in a given graph.
+	We refer to the TSP in undirected complete graphs as Symmetric TSP (STSP) and in directed complete graphs as Asymmetric TSP (ATSP).
+
+	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged.
 	
-	Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
-	In fact, we extend those algorithms to a more general basis.
+	The NN approach has been mentioned one of the first times by Bellmore and Nemhauser in 1968 \cite{BELLMORE1968}.
+	
+	Some
+	 
+	 some are more simple like \red{GR} and \red{NN}, some are more complicated like the Lin-Kernigham heuristic \cite{LIN1973}.
+	
+	The algorithm we present is applicable to both types and the experimental results shown in section \ref{sec:experimental} do not show a big difference in quality of solution between the two types.
+	
+	First we present the algorithm and show some of its properties, then we show some related work and finally present some experimental results.
+	
+
+
+%	Readers might find a strong relation between the algorithm and the well-known Nearest-Neighbor and the Repetitive-Nearest-Neighbor heuristics. 
+%	In fact, we extend those algorithms to a more general basis.
 	
 	\section{Algorithm}
 	\label{sec:algorithm}
@@ -52,11 +67,21 @@
 	\section{Related Work}
 	\label{sec:related}
 	
-	As Gutin, Yeo and Zverovich have shown \cite{GUTIN2002}, the Nearest-Neighbor approach in general is sub optimal: 
-	For each number of nodes there exist some instances for which the algorithm produces a very poor result. 
+	Similar to Gutin, Yeo and Zverovich \cite{GUTIN2002}, for every $n \in \mathbb{N}$ we define the \textit{domination number} of an algorithm for the TSP as the maximum integer $d(n)$ for which the algorithm produces a tour that is better or equal than $d(n)$ other tours.
+	 
+	
+	In general the Nearest-Neighbor approach has been shown to be sub optimal \cite{GUTIN2002}: 
+	For each number of nodes there exist some instances for which the algorithm produces a very poor result.
+	In fact, the domination number for $0$-RNN is 1, the worst possible domination number.
+	$1$-RNN has a domination number of at most $n - 1$ and at least $n / 2$.
+	As shown in theorem \ref{theo:quality}, every run of the algorithm for $k \geq 1$ considers all tours a $1$-RNN run for the same instance does.
+	
+	
+	\red{TBD: Own domination number proof?}
+	
 	Despite this all samples tested in our experiments in Section \ref{sec:experimental} produce reasonable results.
 	
-	What else?
+	\red{What else?}
 	\section{Experimental Results}
 	\label{sec:experimental}
 	
@@ -66,7 +91,15 @@
 	\section{Conclusion}
 	\label{sec:conclusion}
 	
-	Future research: Domination Analysis of the more general $k$-RNN.
+	We presented an extension of the already known Nearest Neighbor heuristic to a family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
+	This algorithm takes all permutations of $k$ vertices as a starting tour and performs a Nearest Neighbor search from there on. 
+	The result is the shortest of all tours found that way.
+	
+	As $k$ increases our experiments only show a slight increase in the quality of solution whereas the running time increases by a factor of $n$.
+	Therefore
+	
+	A scope of future research could be a more thorough theoretical analysis of the algorithm, especially a extension of the domination analysis to the more general $k$-RNN will give more insight in its competitiveness among other algorithms.
+
 	
 	\bibliography{main}
 	\bibliographystyle{plain}

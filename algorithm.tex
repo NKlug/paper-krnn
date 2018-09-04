@@ -1,6 +1,7 @@
 In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
+This abstracts the Nearest-Neighbor (NN) and Repetitive-Nearest-Neighbor (RNN) heuristics and extends it to a more general basis.
 Later we will show a property about the quality of the solution found by the algorithm and present some of its variations.
-Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a "tour". 	
+Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a tour. 	
 
 Let $G = (V, E)$ be a complete Graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be vertices of $G$. 
 Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two vertices. 
@@ -27,13 +28,14 @@ The second important part for the running time is Step 2. In order to find the n
 Since this is done for $n - k = O(n)$ nodes, the total running time of Step 2 is $O(n^2)$.
 Therefore a $k$-RNN run takes time $O(n^2 \cdot n^k) = O(n^{k+2})$.
 
-Similar to the $k$-Opt algorithms \cite{CROES1958, LIN1973}, for $k = n$ $k$-RNN also gives the exact solution. In this case, the algorithm degrades to a brute-force search.
+Similar to the $k$-Opt algorithms \cite{CROES1958, LIN1973}, for $k = n$, $k$-RNN also gives the exact solution. In this case, the algorithm degrades to a plain brute-force search.
 Due to the running time of $O(n!)$ this is not the preferable way to obtain it.
 
 In the following we refer to an execution of $k$-RNN for a specific instance and fixed $k$ as a "run" of the algorithm.
 We no present a property of the algorithm about the quality of the solution found by $k$-RNN.
 \begin{theorem}
-	For $k < l$, if there exist no nodes $a, b, c$ with $c(a, b) = c(a, c)$, the result of a $l$-RNN run is always better or equal to the result of a $k$-RNN run.
+	\label{theo:quality}
+	For $k < l$, if there exist no vertices $a, b, c$ with $c(a, b) = c(a, c)$, the result of a $l$-RNN run is always better or equal to the result of a $k$-RNN run.
 \end{theorem}
 \begin{proof}
 	Let $T$ be a tour found by a $k$-RNN run and $(v_1, v_2, \mathellipsis, v_l)$ the first $l$ nodes of $T$. 
@@ -43,7 +45,13 @@ We no present a property of the algorithm about the quality of the solution foun
 
 There are also some variations of the presented algorithm of which we want to mention two.
 
-In step 2.2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_i$. This can be extended in such a way, that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
+In case of multiple nearest neighbors in step 2, one node gets chosen randomly. 
+In order to avoid this non-deterministic choice, a variation of the algorithm constructs multiple paths from there on, one for each nearest neighbor. 
+Although this eliminates the potential randomness, in some cases this will make the running time exponential.
+
+Another approach is the following:
+In step 2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_e$. 
+This can be extended in such a way that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
 We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm would then look the following:
 
 \begin{description}
@@ -53,10 +61,7 @@ We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm wou
 	\[
 	\arg \min\{c(v_e, p),\ c(v_s, p) |\ p \in V \text{ and $p$ is unvisited}\}
 	\] 
-	and mark $q$ as visited. If $c(v_s, q) < c (v_e, q)$, insert $q$ at the start of $T$ and set $v_s = q$. Else append $q$ to the end of $T$ and set $v_e = q$.
+	and mark $q$ as visited. If $c(q, v_s) < c (v_e, q)$, insert $q$ at the start of $T$ and set $v_s = q$. Else append $q$ to the end of $T$ and set $v_e = q$.
 \end{description}
 
-Results...
-
-Another variant is that when you find multiple edges with the same weight in Step 2, you continue constructing multiple paths, one for each duplicate. 
-Although this eliminates the potential randomness, in some cases this will make the running time exponential.
+We also present results of this variation in section \ref{sec:experimental}.

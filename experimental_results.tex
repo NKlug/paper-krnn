@@ -1,9 +1,11 @@
 In the following we are going to present some experimental results of the algorithm. The experiments where conducted for several instances of TSPLIB \cite{REINELT1995}, symmetric as well as asymmetric.
 
-TABLES
+\red{TABLES}
 
 \input{symmetric_table}
 
 \input{asymmetric_table}
 
-Results show that the quality is most of the time only increasing by a tiny portion.
+It can be observed that the results of $2$-RNN are only slightly better than those of $1$-RNN, sometimes they are even equal.
+Considering that a $2$-RNN run for an instance with 1379 vertices (namely TSPLIB's \texttt{nrw1379}) takes about \red{XX} minutes while a $1$-RNN run for the same instance only takes \red{xx} minutes, the quality of the solution does not increase enough to justify the running time.
+In general, this makes $2$-RNN less preferable than $1$-RNN since they almost give the same result.
