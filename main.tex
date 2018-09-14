@@ -14,6 +14,7 @@
 \usepackage{amsfonts}
 \usepackage{siunitx}
 \usepackage{xcolor}
+\usepackage{tikz, pgfplots}
 
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -22,6 +23,7 @@
 \renewcommand{\baselinestretch}{1.15} % line distance 
 \newcommand{\red}{\textcolor{red}}
 \allowdisplaybreaks
+\pgfplotsset{compat=1.15}
 
 \newtheorem{theorem}{Theorem}
 
@@ -34,22 +36,27 @@
 	\maketitle
 	\begin{abstract}
 		\red{This is the abstract of the paper.}
+		The TSP ...
+		
+		We present an extension of existing Nearest Neighbor heuristics to an algorithm called $k$-Repetitive Nearest Neighbor. 
+		The idea is to start with a tour of $k$ nodes and then perform a Nearest Neighbor search from there on. 
+		After doing this for all permutations of $k$ nodes the result gets selected as the shortest tour found. 
+		Experimental results show that for $2$-RNN the solutions quality remains relatively stable between about $10\%$ to $40\%$ above the optimum.
 	\end{abstract}
 
 	\section{Introduction}
 	\label{sec:introduction}
 	The traveling salesman problem (TSP) is one of the most studied problems in theoretical computer science. 
 	Despite its simplicity, no efficient algorithms exist. 
-	The problem is, in fact, NP-hard and asks to find a shortest Hamiltonian Cycle in a given graph.
+	The problem is, in fact, NP-hard and asks to find a shortest Hamiltonian Cycle in a given graph -- a permutation of vertices for which the sum of the connecting edges is the least.
 	We refer to the TSP in undirected complete graphs as Symmetric TSP (STSP) and in directed complete graphs as Asymmetric TSP (ATSP).
+	Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a tour. 	
 
-	\red{Definition: Tour}
-
-	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged. One of the popular ones are the $2$-Opt heuristic \cite{CROES1958}, the $3$-Opt algorithm \cite{LIN1965} and the $k$-opt extension by Lin and Kernigham \cite{LIN1973} which uses a dynamic value.
+	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged. One of the popular ones are the $2$-Opt heuristic \cite{CROES1958}, the $3$-Opt algorithm \cite{LIN1965} and the $k$-opt extension by Lin and Kernigham \cite{LIN1973} which uses a dynamic $k$ value.
 	
 	The idea behind the algorithm which is presented here is based on is the "Nearest Neighbor" heuristic (NN).
-	It has already been mentioned in the 1960s (\red{TODO: Check if this is true}) by Bellmore and Nemhauser \cite{BELLMORE1968}.
-	The basic idea of this algorithm is to pick one starting node randomly and repeatedly extend the sub-tour by its current nearest neighbor until a tour is formed.
+	It has already been mentioned in the 1960s by Bellmore and Nemhauser \cite{BELLMORE1968}.
+	The basic idea of this algorithm is to pick one starting node randomly and repeatedly extend the sub-tour by its current nearest neighbor until a full tour is formed.
 	
 	The algorithm we present provides some abstraction and generalization to this Nearest Neighbor heuristic. 
 	It is applicable to both STSP and ATSP and the experimental results in Section \ref{sec:experimental} do not show a big difference in quality of solution between those two.
@@ -72,7 +79,7 @@
 	In fact, the domination number for $0$-RNN is 1, the worst possible domination number.
 	$1$-RNN has a domination number of at most $n - 1$ and at least $n / 2$.
 	As shown in theorem \ref{theo:quality}, every run of the algorithm for $k \geq 1$ considers all tours a $1$-RNN run for the same instance does.
-	
+	Therefore for $k \geq 1$ $k$-RNN also has a domination number of at least $n / 2$.
 	
 	\red{TBD: Own domination number proof?}
 	
@@ -95,7 +102,7 @@
 	As $k$ increases our experiments only show a slight increase in the quality of solution whereas the running time increases by a factor of $n$.
 	Therefore
 	
-	A scope of future research could be a more thorough theoretical analysis of the algorithm, especially a extension of the domination analysis to the more general $k$-RNN will give more insight in its competitiveness among other algorithms.
+	A scope of future research could be a more thorough theoretical analysis of the algorithm, especially a extension of the domination analysis to the more general $k$-RNN will give more insight in its competitiveness among other algorithms. 
 
 	
 	\bibliography{main}
