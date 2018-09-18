@@ -1,11 +1,26 @@
-In the following we are going to present some experimental results of the algorithm. The experiments where conducted for several instances of TSPLIB \cite{REINELT1995}, symmetric as well as asymmetric.
-
-\red{TABLES}
+In the following we are going to present some experimental results of the algorithm. The experiments where conducted for several instances of TSPLIB \cite{REINELT1995}, symmetric as well as asymmetric, comparing $1$- and $2$-RNN runs.
+Because of the running time, larger $k$-values could not be tested adequately.
 
 \input{symmetric_table}
 
+Figure \ref{fig:STSP} shows the results of experiments conducted for 48 instances of the STSP taken from TSPLIB \cite{REINELT1995} comparing $1$-RNN, $2$-RNN and the bidirectional version of $2$-RNN.
+It can be observed that the results of $2$-RNN are only slightly better than those of $1$-RNN, sometimes they are even equal.
+We would like to point out two specific instances, the first is \texttt{brg180}.
+For this 180-city instance, standard 1-RNN returns the poor result of 8890 (355.9\% above the optimum) while 2-RNN is able to avoid this returning a tour with length 2020 (3.59\% above the optimum).
+For one other instance (\texttt{br17}), $2$-RNN even produces the exact result.
+
+In general all results produced by $2$-RNN are reasonable. 
+On average, the tours produced are 10 \% to 40 \% longer than the optimum.
+Using these observations, we expect the algorithm to perform similarly for other instances although there might be instances were the output is of unreasonable quality.
+
+Considering that a $2$-RNN run for an instance with 1379 vertices (namely TSPLIB's \texttt{nrw1379}) takes about 60 minutes to finish while a $1$-RNN run for the same instance only takes about 3 seconds (tested on a standard laptop), the quality of the solution does not increase by a big enough amount to justify the running time.
+In general, this makes $2$-RNN less preferable than $1$-RNN.
+
+The results of the bidirectional variant of 2-RNN are of different quality. For some instances they outperform $2$-RNN, for some others $2$-RNN performs better.
+As the bidirectional version tries to extend the tour in both directions rather than only one, the running time is about twice as long as for the normal variant.
+
 \input{asymmetric_table}
 
-It can be observed that the results of $2$-RNN are only slightly better than those of $1$-RNN, sometimes they are even equal.
-Considering that a $2$-RNN run for an instance with 1379 vertices (namely TSPLIB's \texttt{nrw1379}) takes about \red{XX} minutes while a $1$-RNN run for the same instance only takes \red{xx} minutes, the quality of the solution does not increase enough to justify the running time.
-In general, this makes $2$-RNN less preferable than $1$-RNN since they almost give the same result.
+Figure \ref{fig:ATSP} shows experimental results for 18 instances of the ATSP.
+In comparison to the $2$-RNN results for the STSP, the $2$-RNN results here seem to be worse:
+Whereas there is no instance where the tour length exceeds the optimum by more than 25\% for STSP there are 4 instances for the ATSP where this is the case.
