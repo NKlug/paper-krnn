@@ -1,20 +1,18 @@
 In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
-This abstracts the Nearest-Neighbor (NN) and Repetitive-Nearest-Neighbor (RNN) heuristics and extends it to a more general basis.
-Later we will show a property about the quality of the solution found by the algorithm and present some of its variations.
-Following a popular convention for TSP-related algorithms, we will also refer to a Hamiltonian cycle as a tour. 	
+This abstracts the Nearest Neighbor (NN) and Repetitive Nearest Neighbor (RNN) heuristics and extend them to a more general basis.
 
-Let $G = (V, E)$ be a complete Graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be vertices of $G$. 
+Let $G = (V, E)$ be a complete graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be distinct vertices of $G$. 
 Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two vertices. 
 The algorithm consists of the following steps:
 
 
 \begin{description}
-	\item[Step 1:] For every combination of $k$ distinct vertices $v_1, v_2, \mathellipsis, v_k$ create the partial tour $T = (v_1, v_2, \mathellipsis, v_k)$ and mark the vertices $v_1, v_2, \mathellipsis, v_k$ as visited.
+	\item[Step 1:] For every combination of the $k$ vertices $v_1, v_2, \mathellipsis, v_k$ create the partial tour $T = (v_1, v_2, \mathellipsis, v_k)$ and mark the vertices $v_1, v_2, \mathellipsis, v_k$ as visited.
 	
-	\item[Step 2:] Set $v_e = v_k$. While there are unvisited vertices left: 
-	Select $v_{i+1}$ as the nearest unvisited neighbor of $v_e$. 
+	\item[Step 2:] Set $i = k$. While there are unvisited vertices left: 
+	Select $v_{i+1}$ as the nearest unvisited neighbor of $v_i$ and append $v_{i+1}$ to $T$. 
 	If there are multiple nearest neighbors, select any.
-	Mark $v_{i+1}$ as visited and set $v_e = v_{i+1}$.
+	Mark $v_{i+1}$ as visited and increment $i$ by $1$.
 	
 	\item[Step 3:] Among all $k!$ tours found select the shortest as the result
 \end{description}	
@@ -32,7 +30,7 @@ Similar to the $k$-Opt algorithms \cite{CROES1958, LIN1973}, for $k = n$, $k$-RN
 Due to the running time of $O(n!)$ this is not the preferable way to obtain it.
 
 In the following we refer to an execution of $k$-RNN for a specific instance and fixed $k$ as a "run" of the algorithm.
-We no present a property of the algorithm about the quality of the solution found by $k$-RNN.
+We now present a property of the algorithm about the quality of the solution found by $k$-RNN.
 \begin{theorem}
 	\label{theo:quality}
 	For $k < l$, if there exist no vertices $a, b, c$ with $c(a, b) = c(a, c)$, the result of a $l$-RNN run is always better or equal to the result of a $k$-RNN run.
@@ -45,12 +43,12 @@ We no present a property of the algorithm about the quality of the solution foun
 
 There are also some variations of the presented algorithm of which we want to mention two.
 
-In case of multiple nearest neighbors in step 2, one node gets chosen randomly. 
+In case of multiple nearest neighbors in Step 2, one node gets chosen randomly. 
 In order to avoid this non-deterministic choice, a variation of the algorithm constructs multiple paths from there on, one for each nearest neighbor. 
 Although this eliminates the potential randomness, in some cases this will make the running time exponential.
 
 Another approach is the following:
-In step 2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_e$. 
+In Step 2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_e$. 
 This can be extended in such a way that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
 We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm would then look the following:
 
@@ -64,4 +62,4 @@ We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm wou
 	and mark $q$ as visited. If $c(q, v_s) < c (v_e, q)$, insert $q$ at the start of $T$ and set $v_s = q$. Else append $q$ to the end of $T$ and set $v_e = q$.
 \end{description}
 
-We also present results of this variation in section \ref{sec:experimental}.
+We also present results of this variation in Section \ref{sec:experimental}.

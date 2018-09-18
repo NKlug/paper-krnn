@@ -15,6 +15,8 @@
 \usepackage{siunitx}
 \usepackage{xcolor}
 \usepackage{tikz, pgfplots}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
 
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -35,10 +37,8 @@
 \begin{document}
 	\maketitle
 	\begin{abstract}
-		\red{This is the abstract of the paper.}
-		The TSP ...
-		
-		We present an extension of existing Nearest Neighbor heuristics to an algorithm called $k$-Repetitive Nearest Neighbor. 
+		Nearest Neighbor heuristics
+		We present an extension of existing Nearest Neighbor heuristics to an algorithm called $k$-Repetitive-Nearest-Neighbor. 
 		The idea is to start with a tour of $k$ nodes and then perform a Nearest Neighbor search from there on. 
 		After doing this for all permutations of $k$ nodes the result gets selected as the shortest tour found. 
 		Experimental results show that for $2$-RNN the solutions quality remains relatively stable between about $10\%$ to $40\%$ above the optimum.
@@ -54,7 +54,7 @@
 
 	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged. One of the popular ones are the $2$-Opt heuristic \cite{CROES1958}, the $3$-Opt algorithm \cite{LIN1965} and the $k$-opt extension by Lin and Kernigham \cite{LIN1973} which uses a dynamic $k$ value.
 	
-	The idea behind the algorithm which is presented here is based on is the "Nearest Neighbor" heuristic (NN).
+	The idea behind the algorithm which is presented here is based on the "Nearest Neighbor" heuristic (NN).
 	It has already been mentioned in the 1960s by Bellmore and Nemhauser \cite{BELLMORE1968}.
 	The basic idea of this algorithm is to pick one starting node randomly and repeatedly extend the sub-tour by its current nearest neighbor until a full tour is formed.
 	
@@ -71,7 +71,7 @@
 	\section{Related Work}
 	\label{sec:related}
 	
-	Similar to Gutin, Yeo and Zverovich \cite{GUTIN2002}, for every $n \in \mathbb{N}$ we define the \textit{domination number} of an algorithm for the TSP as the maximum integer $d(n)$ for which the algorithm produces a tour that is better or equal than $d(n)$ other tours.
+	Similar to Gutin, Yeo and Zverovich in their domination analysis of greedy heuristics for the TSP \cite{GUTIN2002}, for every $n \in \mathbb{N}$ we define the \textit{domination number} of an algorithm for the TSP as the maximum integer $d(n)$ for which the algorithm produces a tour that is better or equal than $d(n)$ other tours.
 	 
 	
 	In general the Nearest-Neighbor approach has been shown to be sub optimal \cite{GUTIN2002}: 
@@ -79,13 +79,9 @@
 	In fact, the domination number for $0$-RNN is 1, the worst possible domination number.
 	$1$-RNN has a domination number of at most $n - 1$ and at least $n / 2$.
 	As shown in theorem \ref{theo:quality}, every run of the algorithm for $k \geq 1$ considers all tours a $1$-RNN run for the same instance does.
-	Therefore for $k \geq 1$ $k$-RNN also has a domination number of at least $n / 2$.
-	
-	\red{TBD: Own domination number proof?}
+	Therefore for $k \geq 1$, $k$-RNN also has a domination number of at least $n / 2$.
 	
 	Despite this all samples tested in our experiments in Section \ref{sec:experimental} produce reasonable results.
-	
-	\red{What else?}
 	\section{Experimental Results}
 	\label{sec:experimental}
 	
@@ -99,10 +95,12 @@
 	This algorithm takes all permutations of $k$ vertices as a starting tour and performs a Nearest Neighbor search from there on. 
 	The result is the shortest of all tours found that way.
 	
-	As $k$ increases our experiments only show a slight increase in the quality of solution whereas the running time increases by a factor of $n$.
-	Therefore
+	We have proven that as $k$ increases, so does the quality of the tours found.
+	Despite this, our experimental results only show a slight increase in the quality of solution as $k$ increases, meanwhile the running time increases by a factor of $n$.
+	In one case a larger $k$ ($2$-RNN) was able to avoid an undesirable result from $1$-RNN, reducing the excess by over 350\%.
 	
-	A scope of future research could be a more thorough theoretical analysis of the algorithm, especially a extension of the domination analysis to the more general $k$-RNN will give more insight in its competitiveness among other algorithms. 
+	
+	A scope of future research could be a more thorough theoretical analysis of the algorithm, especially an extension of the domination analysis to the more general $k$-RNN will give more insight in its competitiveness among other algorithms. 
 
 	
 	\bibliography{main}
