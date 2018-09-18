@@ -1,37 +1,38 @@
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 	\centering
 	\begin{minipage}{\linewidth}
 		\centering
-		\small
-		\begin{tabular*}{\linewidth}{*{6}{l}}
+		\scriptsize
+		\begin{tabular}{*{3}{L{1.6cm}} >{\bfseries}L{1.6cm} L{1.6cm} >{\bfseries}L{1.6cm} L{1.6cm} >{\bfseries}L{1.6cm}}
 			\toprule
-			&& \multicolumn{2}{c}{1-RNN}& \multicolumn{2}{c}{2-RNN} \\
+			&& \multicolumn{2}{c}{1-RNN}& \multicolumn{2}{c}{2-RNN} & \multicolumn{2}{c}{Bi-2-RNN}\\
 			\cmidrule(lr){3-4}
 			\cmidrule(lr){5-6}
-			Dataset & Optimum & Result & Excess & Result & Excess \\
+			\cmidrule(lr){7-8}
+			Dataset & Optimum & Result & Excess & Result & Excess &&\\
 			\midrule
-			br17    & 39    & 56    & 43.59 & 39    & 0.00  \\
-			ft53    & 6905  & 8584  & 24.32 & 8323  & 20.54 \\
-			ft70    & 38673 & 41815 & 8.12  & 41633 & 7.65  \\
-			ftv33   & 1286  & 1590  & 23.64 & 1544  & 20.06 \\
-			ftv35   & 1473  & 1667  & 13.17 & 1606  & 9.03  \\
-			ftv38   & 1530  & 1759  & 14.97 & 1709  & 11.70 \\
-			ftv44   & 1613  & 1844  & 14.32 & 1829  & 13.39 \\
-			ftv47   & 1776  & 2173  & 22.35 & 2149  & 21.00 \\
-			ftv55   & 1608  & 1948  & 21.14 & 1854  & 15.30 \\
-			ftv64   & 1839  & 2202  & 19.74 & 2202  & 19.74 \\
-			ftv70   & 1950  & 2287  & 17.28 & 2218  & 13.74 \\
-			ftv170  & 2755  & 3582  & 30.02 & 3559  & 29.18 \\
-			kro124p & 36230 & 43316 & 19.56 & 43102 & 18.97 \\
-			p43     & 5620  & 5684  & 1.14  & 5653  & 0.59  \\
-			rbg323  & 1326  & 1702  & 28.36 & 1684  & 27.00 \\
-			rbg358  & 1163  & 1747  & 50.21 & 1719  & 47.81 \\
-			rbg403  & 2465  & 3497  & 41.87 & 3460  & 40.37 \\
-			ry48p   & 14422 & 15575 & 7.99  & 15575 & 7.99  \\
+			br17    & 39    & 56    & 43.59 & 39    & 0.00  && \\
+			ft53    & 6905  & 8584  & 24.32 & 8323  & 20.54 &&\\
+			ft70    & 38673 & 41815 & 8.12  & 41633 & 7.65  &&\\
+			ftv33   & 1286  & 1590  & 23.64 & 1544  & 20.06 &&\\
+			ftv35   & 1473  & 1667  & 13.17 & 1606  & 9.03  &&\\
+			ftv38   & 1530  & 1759  & 14.97 & 1709  & 11.70 &&\\
+			ftv44   & 1613  & 1844  & 14.32 & 1829  & 13.39 &&\\
+			ftv47   & 1776  & 2173  & 22.35 & 2149  & 21.00 &&\\
+			ftv55   & 1608  & 1948  & 21.14 & 1854  & 15.30 &&\\
+			ftv64   & 1839  & 2202  & 19.74 & 2202  & 19.74 &&\\
+			ftv70   & 1950  & 2287  & 17.28 & 2218  & 13.74 &&\\
+			ftv170  & 2755  & 3582  & 30.02 & 3559  & 29.18 &&\\
+			kro124p & 36230 & 43316 & 19.56 & 43102 & 18.97 &&\\
+			p43     & 5620  & 5684  & 1.14  & 5653  & 0.59  &&\\
+			rbg323  & 1326  & 1702  & 28.36 & 1684  & 27.00 &&\\
+			rbg358  & 1163  & 1747  & 50.21 & 1719  & 47.81 &&\\
+			rbg403  & 2465  & 3497  & 41.87 & 3460  & 40.37 &&\\
+			ry48p   & 14422 & 15575 & 7.99  & 15575 & 7.99  && \\
 			\bottomrule
-		\end{tabular*}
+		\end{tabular}
 	\end{minipage}
 	
-	\caption{Results for \red{XX} asymmetric instances of the TSP taken from TSPLIB \cite{REINELT1995}}
+	\caption{Results for 18 instances of the Asymmetric TSP taken from TSPLIB \cite{REINELT1995}. The optimum and the result are given in absolute values. The excess represents the percentage by which the result exceeds the optimum.}
 	\label{fig:ATSP}
 \end{figure}
