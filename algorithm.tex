@@ -1,5 +1,5 @@
-In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
-This abstracts the Nearest Neighbor (NN) and Repetitive Nearest Neighbor (RNN) heuristics and extend them to a more general basis.
+In this section we will present the family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN) algorithms. 
+This abstracts the Nearest-Neighbor (NN) and Repetitive-Nearest-Neighbor (RNN) heuristics and extend them to a more general basis.
 
 Let $G = (V, E)$ be a complete graph and $k \in \mathbb{N}$. Let $v_1, v_2, \mathellipsis, v_k$ be distinct vertices of $G$. 
 Let $c: V \times V \rightarrow \mathbb{R}$ be a cost function describing the cost of the edge between two vertices. 
@@ -14,7 +14,7 @@ The algorithm consists of the following steps:
 	If there are multiple nearest neighbors, select any.
 	Mark $v_{i+1}$ as visited and increment $i$ by $1$.
 	
-	\item[Step 3:] Among all $k!$ tours found select the shortest as the result
+	\item[Step 3:] Among all $\frac{n!}{(n-k)!}$ tours found select the shortest as the result
 \end{description}	
 
 Note that for $k = 1$ the algorithm equals the well-known Repetitive-Nearest-Neighbor approach, and one might define the case $k = 0$ as the popular Nearest-Neighbor algorithm, where one starting node gets selected randomly.
@@ -27,13 +27,13 @@ Since this is done for $n - k = O(n)$ nodes, the total running time of Step 2 is
 Therefore a $k$-RNN run takes time $O(n^2 \cdot n^k) = O(n^{k+2})$.
 
 Similar to the $k$-Opt algorithms \cite{CROES1958, LIN1973}, for $k = n$, $k$-RNN also gives the exact solution. In this case, the algorithm degrades to a plain brute-force search.
-Due to the running time of $O(n!)$ this is not the preferable way to obtain it.
+Due to the running time of $O(n!)$ this is not the preferable way to obtain an exact solution.
 
 In the following we refer to an execution of $k$-RNN for a specific instance and fixed $k$ as a "run" of the algorithm.
 We now present a property of the algorithm about the quality of the solution found by $k$-RNN.
 \begin{theorem}
 	\label{theo:quality}
-	For $k < l$, if there exist no vertices $a, b, c$ with $c(a, b) = c(a, c)$, the result of a $l$-RNN run is always better or equal to the result of a $k$-RNN run.
+	For $k < l$, if there exist no vertices $a, b, c$ with $c(a, b) = c(a, c)$, the result of an $l$-RNN run is always better or equal to the result of a $k$-RNN run.
 \end{theorem}
 \begin{proof}
 	Let $T$ be a tour found by a $k$-RNN run and $(v_1, v_2, \mathellipsis, v_l)$ the first $l$ nodes of $T$. 
@@ -45,12 +45,12 @@ There are also some variations of the presented algorithm of which we want to me
 
 In case of multiple nearest neighbors in Step 2, one node gets chosen randomly. 
 In order to avoid this non-deterministic choice, a variation of the algorithm constructs multiple paths from there on, one for each nearest neighbor. 
-Although this eliminates the potential randomness, in some cases this will make the running time exponential.
+Although this eliminates the randomness, in some cases this will make the running time exponential.
 
 Another approach is the following:
-In Step 2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of $v_e$. 
-This can be extended in such a way that the new node can also be selected as the nearest unvisited neighbor of the current first node of the tour. 
-We refer to this approach as bi-directional $k$-RNN. Step 2 of the algorithm would then look the following:
+In Step 2 node $v_{i+1}$ gets selected as the nearest unvisited neighbor of the last node of the current partial tour. 
+This can be extended in such a way that the new node can also be selected as the nearest unvisited neighbor of the first node of the partial tour. 
+We refer to this approach as bi-directional $k$-RNN (Bi-$k$-RNN). Step 2 of the algorithm would then look the following:
 
 \begin{description}
 	\item[Step 2:] Set $v_e = v_k$ and $v_s = v_1$. 

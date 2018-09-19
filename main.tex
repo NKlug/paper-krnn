@@ -22,7 +22,7 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\renewcommand{\baselinestretch}{1.15} % line distance 
+\renewcommand{\baselinestretch}{1.25} % line distance 
 \newcommand{\red}{\textcolor{red}}
 \allowdisplaybreaks
 \pgfplotsset{compat=1.15}
@@ -37,9 +37,8 @@
 \begin{document}
 	\maketitle
 	\begin{abstract}
-		Nearest Neighbor heuristics
-		We present an extension of existing Nearest Neighbor heuristics to an algorithm called $k$-Repetitive-Nearest-Neighbor. 
-		The idea is to start with a tour of $k$ nodes and then perform a Nearest Neighbor search from there on. 
+		In this paper we present an extension of existing Nearest-Neighbor heuristics to an algorithm called $k$-Repetitive-Nearest-Neighbor. 
+		The idea is to start with a tour of $k$ nodes and then perform a Nearest-Neighbor search from there on. 
 		After doing this for all permutations of $k$ nodes the result gets selected as the shortest tour found. 
 		Experimental results show that for $2$-RNN the solutions quality remains relatively stable between about $10\%$ to $40\%$ above the optimum.
 	\end{abstract}
@@ -54,16 +53,18 @@
 
 	Due to the problem's popularity and its broad area of application, many heuristics and approximation algorithms have emerged. One of the popular ones are the $2$-Opt heuristic \cite{CROES1958}, the $3$-Opt algorithm \cite{LIN1965} and the $k$-opt extension by Lin and Kernigham \cite{LIN1973} which uses a dynamic $k$ value.
 	
-	The idea behind the algorithm which is presented here is based on the "Nearest Neighbor" heuristic (NN).
+	The idea behind the algorithm which is presented here is the "Nearest-Neighbor" heuristic (NN).
 	It has already been mentioned in the 1960s by Bellmore and Nemhauser \cite{BELLMORE1968}.
 	The basic idea of this algorithm is to pick one starting node randomly and repeatedly extend the sub-tour by its current nearest neighbor until a full tour is formed.
 	
-	The algorithm we present provides some abstraction and generalization to this Nearest Neighbor heuristic. 
+	$k$-Repetitive-Nearest-Neighbor ($k$-RNN), the algorithm presented here, provides some abstraction and generalization to this Nearest-Neighbor heuristic. 
 	It is applicable to both STSP and ATSP and the experimental results in Section \ref{sec:experimental} do not show a big difference in quality of solution between those two.
 	
-	In Section \ref{sec:algorithm} we present the algorithm and show some of its properties, then we show some related work. 
-	In Section \ref{sec:experimental} we show some experimental results obtained from running some samples form TSPLIB \cite{REINELT1995}.
+	The original idea for this extension of Nearest-Neighbor heuristics was what now has become $2$-RNN. It was inspired by an Indian philosophy called Madhyasth Darshan \cite{Nagraj2011, Nagraj2013}. 
 	
+	In Section \ref{sec:algorithm} we present the algorithm and show some of its properties, then we show some related work. 
+	In Section \ref{sec:experimental} we show experimental results for $1$- and $2$-RNN obtained from running some samples form TSPLIB \cite{REINELT1995}.
+	 
 	\section{Algorithm}
 	\label{sec:algorithm}
 	\input{algorithm}
@@ -91,8 +92,8 @@
 	\section{Conclusion}
 	\label{sec:conclusion}
 	
-	We presented an extension of the already known Nearest Neighbor heuristic to a family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
-	This algorithm takes all permutations of $k$ vertices as a starting tour and performs a Nearest Neighbor search from there on. 
+	We presented an extension of the already known Nearest-Neighbor heuristic to a family of algorithms we call $k$-Repetitive-Nearest-Neighbor ($k$-RNN). 
+	This algorithm takes all permutations of $k$ vertices as a starting tour and performs a Nearest-Neighbor search from there on. 
 	The result is the shortest of all tours found that way.
 	
 	We have proven that as $k$ increases, so does the quality of the tours found.
